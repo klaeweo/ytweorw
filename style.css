@@ -65,9 +65,19 @@ article {
     }
 }
 
+.card:focused {
+    border-color: white;
+    
+    img {
+        border-radius: 0%;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+}
+
 
 /* For keyboard tab navigation */
 .card:focus-visible {
-    border: 4px solid #fff;
+    border: 5px solid #fff;
     outline: none;
 }
