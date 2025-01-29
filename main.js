@@ -112,3 +112,38 @@ document.addEventListener('keydown', (e)=> {
     }
   }
 })
+
+//Make Arrow Keys Work for TV Navigation 
+document.addEventListener('keydown', (e) => {
+  const focusedElement = document.activeElement;
+  
+  switch(e.key) {
+    case 'ArrowLeft':
+      e.preventDefault();
+      moveFocus('left', focusedElement);
+      break;
+    case 'ArrowRight':
+      e.preventDefault();
+      moveFocus('right', focusedElement);
+      break;
+  }
+});
+
+function moveFocus(direction, currentElement) {
+  // Implement your grid navigation logic here
+  const allCards = Array.from(document.querySelectorAll('.card'));
+  const currentIndex = allCards.indexOf(currentElement);
+  
+  switch(direction) {
+    case 'right':
+      if (currentIndex < allCards.length - 1) {
+        allCards[currentIndex + 1].focus();
+      }
+      break;
+    case 'left':
+      if (currentIndex > 0) {
+        allCards[currentIndex - 1].focus();
+      }
+      break;
+  }
+}
