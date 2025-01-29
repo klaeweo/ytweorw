@@ -15,9 +15,10 @@ article {
     margin-inline: auto;
     width: 96%;
     min-height: 42rem;
-    margin-top: 1rem;
+    margin-top: 5rem;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .card {
@@ -43,8 +44,6 @@ article {
         color: #aaa;
         margin: 0 5px 5px;
         margin-left: auto;
-        /* background-color: green; */
-        /* width: 100%; */
     }
 }
 
@@ -55,29 +54,14 @@ article {
     object-fit: cover;
 }
 
-.card.focused {
-    border-color: white;
-    
-    img {
-        border-radius: 0%;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-    }
-}
-
-.card:focused {
-    border-color: white;
-    
-    img {
-        border-radius: 0%;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-    }
-}
-
-
 /* For keyboard tab navigation */
 .card:focus-visible {
-    border: 5px solid #fff;
+    border-color: #fff;
     outline: none;
+
+    img {
+        border-radius: 0%;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
 }
