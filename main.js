@@ -43,7 +43,7 @@ function renderVideos(videos) {
   container.innerHTML = videos
     .map(
       (video) => `
-      <section class="card" onclick="playVideo('${video.id}')">
+      <section class="card"  tabindex="0" onclick="playVideo('${video.id}')">
                 <div class="thumb">
                     <img src="${video.thumbnail}" alt="${video.title}">
                 </div>
@@ -94,61 +94,21 @@ document.addEventListener("fullscreenchange", () => {
   }
 });
 
+// Focus first card after slight delay to ensure DOM is ready
+setTimeout(() => {
+  const firstCard = document.querySelector('article').firstElementChild;
 
-// * Handling focus navigation: 
-
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.card');
-  let currentFocusIndex = 0;
-
-  // Make cards focusable and initialize first card
-  cards.forEach((card, index) => {
-      card.setAttribute('tabindex', index === 0 ? '0' : '-1');
-      card.addEventListener('focus', () => updateFocus(index));
-  });
-
-  function updateFocus(newIndex) {
-      // Remove focus from previous card
-      cards[currentFocusIndex].classList.remove('focused');
-      cards[currentFocusIndex].setAttribute('tabindex', '-1');
-      
-      // Update current index
-      currentFocusIndex = newIndex;
-      
-      // Add focus to new card
-      cards[currentFocusIndex].classList.add('focused');
-      cards[currentFocusIndex].setAttribute('tabindex', '0');
-      cards[currentFocusIndex].focus();
-      
-      // Scroll into view if needed
-      cards[currentFocusIndex].scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest'
-      });
+  if(firstCard){
+    firstCard.focus();
   }
+}, 100);
 
-  // Handle keyboard navigation
-  document.addEventListener('keydown', (e) => {
-      switch(e.key) {
-          case 'ArrowRight':
-              e.preventDefault();
-              updateFocus(Math.min(currentFocusIndex + 1, cards.length - 1));
-              break;
-          case 'ArrowLeft':
-              e.preventDefault();
-              updateFocus(Math.max(currentFocusIndex - 1, 0));
-              break;
-          case 'Enter':
-              cards[currentFocusIndex].click();
-              break;
-          case 'Tab':
-              e.preventDefault();
-              const direction = e.shiftKey ? -1 : 1;
-              updateFocus(Math.min(Math.max(currentFocusIndex + direction, 0), cards.length - 1));
-              break;
-      }
-  });
-
-  // Initial focus
-  cards[0].focus();
-});
+// Handle Enter key on the card
+document.addEventListener('keydown', (e)=> {
+  if(e.key === "Enter") {
+    const focusedElement = document.activeElement;
+    if(focusedElement.classList.contains('card')){
+      focusedElement.click();
+    }
+  }
+})
